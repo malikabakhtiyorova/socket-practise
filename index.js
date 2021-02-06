@@ -12,9 +12,12 @@ const PORT = process.env.arg || 4000;
 app.engine('html', ejs.renderFile)
 app.set('view engine', 'html')
 
+io.on('connection', () => {
+    console.log('bismillah');
+})
 
 app.get('/', (req, res) => {
-    res.send('OK')
+    res.render('index')
 });
 
 server.listen(PORT, () => console.log(PORT));
