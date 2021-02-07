@@ -8,11 +8,30 @@
 <body>
 <h1>Bismillah</h1>
 
+<input type="text" id='usernameInput'>
+
+<ul id='usersList'></ul>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.js" integrity="sha512-oFOCo2/3DtjrJG4N27BjSLQWoiBv171sK6a+JiWjp/7agxC2nCUP358AqzxkBUb5jX8g6CYLPdSKQTbC0weCwA==" crossorigin="anonymous"></script>
     <script>
-        const socket = ;
+        const socket = io();
 
-        console.log(socket)
+        socket.on('message', (data) => console.log(data))
+
+        usernameInput.onkeyup =  (e) => {
+            if(e.keyCode === 13) {
+                console.log('mashaAlloh')
+
+                socket.emit("login", usernameInput.value)
+            }
+        }
+
+        socket.on('new_login', username => {
+            const newLi = document.createElement('li')
+            newLi.textContent = username
+            usersList.appendChild(newLi)
+        })
+       
     </script>
 </body>
 </html>

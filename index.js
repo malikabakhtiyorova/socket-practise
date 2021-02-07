@@ -3,8 +3,8 @@ const ejs = require('ejs')
 const socket = require('socket.io')
 const http = require('http');
 
-const server = http.createServer(app);
 const app = express();
+const server = http.createServer(app);
 const io = socket(server)
 const PORT = process.env.arg || 4000;
 
@@ -12,8 +12,17 @@ const PORT = process.env.arg || 4000;
 app.engine('html', ejs.renderFile)
 app.set('view engine', 'html')
 
-io.on('connection', () => {
+io.on('connection', (client) => {
     console.log('bismillah');
+    client.on('login', username => {
+        client.broadcast.emit('new_login', username)
+    })
+
+    // client.on('disconnect', () => {
+    //     console.log('fiisabilillah')
+    // })
+
+    // client.broadcast.emit('message', { message: client.id, })
 })
 
 app.get('/', (req, res) => {
